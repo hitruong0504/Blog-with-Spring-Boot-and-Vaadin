@@ -5,6 +5,7 @@ import com.api.blog.Domain.DTO.UserResponseDTO;
 import com.api.blog.Domain.DTO.UserUpdateRequestDTO;
 import com.api.blog.Domain.Entity.User;
 import org.mapstruct.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public interface UserMapper {
 
     UserResponseDTO userToUserResponseDTO(User user, @MappingTarget UserResponseDTO dto);
 
-    List<UserResponseDTO> usersToUserResponseDTOs(List<User> users);
+    List<UserResponseDTO> usersToUserResponseDTOs(Page<User> users);
 
     @AfterMapping
     default void customizeImage(User user, @MappingTarget UserResponseDTO dto) {

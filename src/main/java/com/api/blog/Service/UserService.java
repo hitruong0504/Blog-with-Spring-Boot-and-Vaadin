@@ -1,8 +1,7 @@
 package com.api.blog.Service;
 
 
-import com.api.blog.Domain.DTO.UserAddRequestDTO;
-import com.api.blog.Domain.DTO.UserUpdateRequestDTO;
+import com.api.blog.Domain.DTO.*;
 import com.api.blog.Domain.Entity.User;
 
 import java.io.IOException;
@@ -15,6 +14,6 @@ public interface UserService {
 
     User removeUser(Long userId);
 
-    List<User> getAllUsers();
+    PaginationResponseDTO<UserResponseDTO> getAllUsers(UserSearchRequestDTO userSearchRequestDTO);
 
 }

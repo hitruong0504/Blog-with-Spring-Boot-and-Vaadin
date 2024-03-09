@@ -1,12 +1,13 @@
 package com.api.blog.Controller;
 
-import com.api.blog.Domain.DTO.UserAddRequestDTO;
-import com.api.blog.Domain.DTO.UserResponseDTO;
-import com.api.blog.Domain.DTO.UserUpdateRequestDTO;
+import com.api.blog.Domain.DTO.*;
 import com.api.blog.Domain.Entity.User;
 import com.api.blog.Mapper.UserMapper;
 import com.api.blog.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,9 +45,9 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
-        List<User> userList = userService.getAllUsers();
-        List<UserResponseDTO> userDtoList = userMapper.usersToUserResponseDTOs(userList);
-        return new ResponseEntity<>(userDtoList, HttpStatus.OK);
+    public ResponseEntity<PaginationResponseDTO<UserResponseDTO>> getAllUsers(@ModelAttribute UserSearchRequestDTO userSearchRequestDTO) {
+        userSearchRequestDTO.updatePageable();
+        PaginationResponseDTO<UserResponseDTO> users = userService.getAllUsers(userSearchRequestDTO);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }
