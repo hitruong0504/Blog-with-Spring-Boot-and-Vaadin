@@ -16,6 +16,6 @@ public class ApiResponse<T> {
     private int statusCode;
     private HttpStatus httpStatus;
     private String errorCode;
-    private List<String> messages;
+    private String messages;
     private T data;
 }

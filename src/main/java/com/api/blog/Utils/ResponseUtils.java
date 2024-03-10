@@ -1,6 +1,7 @@
 package com.api.blog.Utils;
 
 import com.api.blog.Domain.DTO.ApiExceptionResponse;
+import com.api.blog.Domain.DTO.ApiResponse;
 import com.api.blog.enums.ErrorCode;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
@@ -30,5 +31,17 @@ public class ResponseUtils {
                 messages
         );
         return new ResponseEntity<>(apiExceptionResponse, errorCode.getHttpStatus());
+    }
+
+    public static <T> ResponseEntity<ApiResponse<T>> createResponse(T data, ErrorCode errorCode){
+        ApiResponse apiResponse = new ApiResponse(
+                new Date(),
+                errorCode.getHttpStatus().value(),
+                errorCode.getHttpStatus(),
+                errorCode.getCode(),
+                errorCode.getMessage(),
+                data
+        );
+        return new ResponseEntity<>(apiResponse, errorCode.getHttpStatus());
     }
 }
