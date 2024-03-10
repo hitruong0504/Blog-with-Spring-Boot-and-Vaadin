@@ -15,6 +15,6 @@ public class ApiExceptionResponse {
     private Date timestamp;
     private int statusCode;
     private HttpStatus httpStatus;
-    private String errorCode;
+    private String responseCode;
     private List<String> messages;
 }

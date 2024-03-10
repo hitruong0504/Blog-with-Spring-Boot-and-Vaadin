@@ -1,6 +1,6 @@
 package com.api.blog.Exception;
 
-import com.api.blog.enums.ErrorCode;
+import com.api.blog.enums.ResponseCode;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -8,13 +8,13 @@ import java.util.List;
 
 @Getter
 public class CustomApiException extends Exception{
-    private final ErrorCode errorCode;
+    private final ResponseCode responseCode;
 
     private final List<String> errors;
 
-    public CustomApiException(ErrorCode errorCode, String... messages){
+    public CustomApiException(ResponseCode responseCode, String... messages){
         super(String.join(", ", messages));
-        this.errorCode = errorCode;
+        this.responseCode = responseCode;
         this.errors = Arrays.asList(messages);
     }
 }

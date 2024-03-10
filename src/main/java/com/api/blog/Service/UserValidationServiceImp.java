@@ -2,11 +2,9 @@ package com.api.blog.Service;
 
 import com.api.blog.Domain.Entity.User;
 import com.api.blog.Exception.CustomApiException;
-import com.api.blog.Exception.UsernameExistException;
 import com.api.blog.Repository.UserRepository;
-import com.api.blog.enums.ErrorCode;
+import com.api.blog.enums.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +21,7 @@ public class UserValidationServiceImp implements UserValidationService{
         if(userWithUsername.isPresent()){
             User user = userWithUsername.get();
             if(userId == null || !user.getId().equals(userId)){
-                throw new CustomApiException(ErrorCode.USERNAME_ALREADY_EXISTS, ErrorCode.USERNAME_ALREADY_EXISTS.getMessage() + ": " + newUsername);
+                throw new CustomApiException(ResponseCode.USERNAME_ALREADY_EXISTS, ResponseCode.USERNAME_ALREADY_EXISTS.getMessage() + ": " + newUsername);
             }
         }
 
@@ -31,7 +29,7 @@ public class UserValidationServiceImp implements UserValidationService{
         if(userWithEmail.isPresent()){
             User user = userWithEmail.get();
             if(userId == null || !user.getId().equals(userId)){
-                throw new CustomApiException(ErrorCode.EMAIL_ALREADY_EXISTS, ErrorCode.EMAIL_ALREADY_EXISTS.getMessage() + ": " + newEmail);
+                throw new CustomApiException(ResponseCode.EMAIL_ALREADY_EXISTS, ResponseCode.EMAIL_ALREADY_EXISTS.getMessage() + ": " + newEmail);
             }
         }
     }

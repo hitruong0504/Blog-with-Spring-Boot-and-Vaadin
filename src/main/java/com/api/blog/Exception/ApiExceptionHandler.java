@@ -25,6 +25,6 @@ public class ApiExceptionHandler implements ErrorController {
 
     @ExceptionHandler({CustomApiException.class})
     public ResponseEntity<ApiExceptionResponse> customApiException(CustomApiException e){
-        return ResponseUtils.createResponse(e.getErrorCode(), e.getErrors());
+        return ResponseUtils.createResponse(e.getResponseCode(), e.getErrors());
     }
 }

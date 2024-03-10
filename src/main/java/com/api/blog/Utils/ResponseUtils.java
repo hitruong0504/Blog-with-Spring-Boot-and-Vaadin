@@ -2,8 +2,7 @@ package com.api.blog.Utils;
 
 import com.api.blog.Domain.DTO.ApiExceptionResponse;
 import com.api.blog.Domain.DTO.ApiResponse;
-import com.api.blog.enums.ErrorCode;
-import org.springframework.boot.web.servlet.error.ErrorController;
+import com.api.blog.enums.ResponseCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -22,23 +21,23 @@ public class ResponseUtils {
         return new ResponseEntity<>(apiExceptionResponse, httpStatus);
     }
 
-    public static ResponseEntity<ApiExceptionResponse> createResponse(ErrorCode errorCode, List<String> messages){
+    public static ResponseEntity<ApiExceptionResponse> createResponse(ResponseCode errorCode, List<String> messages){
         ApiExceptionResponse apiExceptionResponse = new ApiExceptionResponse(
                 new Date(),
                 errorCode.getHttpStatus().value(),
                 errorCode.getHttpStatus(),
-                errorCode.getCode(),
+                errorCode.getResponseCode(),
                 messages
         );
         return new ResponseEntity<>(apiExceptionResponse, errorCode.getHttpStatus());
     }
 
-    public static <T> ResponseEntity<ApiResponse<T>> createResponse(T data, ErrorCode errorCode){
+    public static <T> ResponseEntity<ApiResponse<T>> createResponse(T data, ResponseCode errorCode){
         ApiResponse apiResponse = new ApiResponse(
                 new Date(),
                 errorCode.getHttpStatus().value(),
                 errorCode.getHttpStatus(),
-                errorCode.getCode(),
+                errorCode.getResponseCode(),
                 errorCode.getMessage(),
                 data
         );
