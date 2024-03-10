@@ -2,6 +2,7 @@ package com.api.blog.Controller;
 
 import com.api.blog.Domain.DTO.*;
 import com.api.blog.Domain.Entity.User;
+import com.api.blog.Exception.UsernameExistException;
 import com.api.blog.Mapper.UserMapper;
 import com.api.blog.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,13 @@ public class UserController {
     UserMapper userMapper;
 
     @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<User> addUser(UserAddRequestDTO userAddRequestDTO) throws IOException {
+    public ResponseEntity<User> addUser(UserAddRequestDTO userAddRequestDTO) throws IOException, UsernameExistException {
         User newUser = userService.createUser(userAddRequestDTO);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/update/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<User> updateUser(@PathVariable Long userId, UserUpdateRequestDTO userUpdateRequestDTO) throws IOException {
+    public ResponseEntity<User> updateUser(@PathVariable Long userId, UserUpdateRequestDTO userUpdateRequestDTO) throws IOException, UsernameExistException {
         User updatedUser = userService.updateUser(userId, userUpdateRequestDTO);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }

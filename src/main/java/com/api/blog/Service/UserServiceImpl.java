@@ -2,6 +2,7 @@ package com.api.blog.Service;
 
 import com.api.blog.Domain.DTO.*;
 import com.api.blog.Domain.Entity.User;
+import com.api.blog.Exception.UsernameExistException;
 import com.api.blog.Mapper.UserMapper;
 import com.api.blog.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService {
     UserValidationService userValidationService;
 
     @Override
-    public User createUser(UserAddRequestDTO userDTO) throws IOException {
+    public User createUser(UserAddRequestDTO userDTO) throws IOException, UsernameExistException {
         userValidationService.validateUsernameAndEmail(userDTO.getUsername(), userDTO.getEmail(), null);
         String imageName= imageService.saveProfileImage(null, userDTO.getUsername(), userDTO.getProfileImgUrl());
         User user = userMapper.userAddRequestDTOToUser(userDTO);
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(Long userId, UserUpdateRequestDTO userDTO) throws IOException {
+    public User updateUser(Long userId, UserUpdateRequestDTO userDTO) throws IOException, UsernameExistException {
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found" + userId));
         userMapper.updateUserFromDTO(userDTO, existingUser);
