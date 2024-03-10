@@ -22,4 +22,9 @@ public class ApiExceptionHandler implements ErrorController {
     public ResponseEntity<ApiExceptionResponse> emailExistException(EmailExistException e){
         return ResponseUtils.createResponse(HttpStatus.BAD_REQUEST, Collections.singletonList(e.getMessage()));
     }
+
+    @ExceptionHandler({CustomApiException.class})
+    public ResponseEntity<ApiExceptionResponse> customApiException(CustomApiException e){
+        return ResponseUtils.createResponse(e.getErrorCode(), e.getErrors());
+    }
 }

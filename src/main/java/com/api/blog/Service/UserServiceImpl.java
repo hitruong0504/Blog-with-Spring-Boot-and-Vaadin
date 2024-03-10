@@ -2,6 +2,7 @@ package com.api.blog.Service;
 
 import com.api.blog.Domain.DTO.*;
 import com.api.blog.Domain.Entity.User;
+import com.api.blog.Exception.CustomApiException;
 import com.api.blog.Exception.UsernameExistException;
 import com.api.blog.Mapper.UserMapper;
 import com.api.blog.Repository.UserRepository;
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService {
     UserValidationService userValidationService;
 
     @Override
-    public User createUser(UserAddRequestDTO userDTO) throws IOException, UsernameExistException {
+    public User createUser(UserAddRequestDTO userDTO) throws CustomApiException, IOException {
         userValidationService.validateUsernameAndEmail(userDTO.getUsername(), userDTO.getEmail(), null);
         String imageName= imageService.saveProfileImage(null, userDTO.getUsername(), userDTO.getProfileImgUrl());
         User user = userMapper.userAddRequestDTOToUser(userDTO);
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(Long userId, UserUpdateRequestDTO userDTO) throws IOException, UsernameExistException {
+    public User updateUser(Long userId, UserUpdateRequestDTO userDTO) throws IOException, CustomApiException {
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found" + userId));
         userMapper.updateUserFromDTO(userDTO, existingUser);
